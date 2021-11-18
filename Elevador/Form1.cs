@@ -15,82 +15,163 @@ namespace Elevador
     {
 
         private Elevator elevador;
-        public int auxAndar;
-        public int auxProxAndar;
+        private int auxAndar;
+        private int auxProxAndar;
+        public int i = 0;
+        public int tarefa = 0;
+        int cont;
+        int auxcont;
 
         public Form1()
         {
             InitializeComponent();
 
             elevador = new Elevator();
-            elevador.ElevatorEvent += mudarAndar;
+            elevador.ElevatorEvent += MudarAndar;
 
         }
 
-        public void mudarAndar(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
+            txtboxAndar.Text = (elevador.andarAtual).ToString();
+        }
+
+        public async void MudarAndar(object sender, EventArgs e)
+        {
+
+
             auxAndar = elevador.andarAtual;
             auxProxAndar = elevador.proximoAndar;
+
 
             if (auxAndar != auxProxAndar)
             {
                 if (auxAndar < auxProxAndar)
                 {
 
-                    for (int i = auxAndar; i <= auxProxAndar; i++)
+                    for (i = auxAndar; i <= auxProxAndar; i++)
                     {
-                        Console.WriteLine("Subindo Andar");
-                        Task.Delay(2000); //Tempo de transicao entre andares
-
-
+                        txtboxAndar.Text = i.ToString();
+                        txtboxSituacao.Text = "Cheguei aqui - Subindo";
+                        await Transicao();
                     }
-                    Console.WriteLine("Porta Fechando");
-                    Task.Delay(2000); //Abre a porta
 
+                    elevador.andarAtual = elevador.proximoAndar;
+                    txtboxAndar.Text = (elevador.andarAtual).ToString();
+                    await Transicao();
+                    await Finalizar();
                 }
                 else if (auxAndar > auxProxAndar)
                 {
-                    for (int i = auxAndar;i <= auxProxAndar; i--)
+                    for (i = auxAndar; i >= auxProxAndar; i--)
                     {
-                        Task.Delay(2000); //Tempo de transicao entre andares
-                        Console.WriteLine("Descendo Andar");
+
+                        txtboxAndar.Text = i.ToString();
+                        txtboxSituacao.Text = "Cheguei aqui - Descendo";
+                        await Transicao();
                     }
-                    Console.WriteLine("Porta Fechando");
-                    Task.Delay(2000); //Abre a porta
+
+                    elevador.andarAtual = elevador.proximoAndar;
+                    txtboxAndar.Text = (elevador.andarAtual).ToString();
+                    await Transicao();
+                    await Finalizar()
+;
                 }
             }
 
-            //Controle de Botões
-
-
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        async Task Transicao()
         {
-            elevador.proximoAndar = 0;
+            await Task.Delay(2000);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        async Task Finalizar()
         {
-            elevador.proximoAndar = 1;
+            cont++;
+            await Task.Run(() => Task.Delay(200));
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        async void Verificar(int x)
         {
-            elevador.proximoAndar = 2;
+
+            var finalizar = Finalizar();
+            auxcont++;
+            if (cont == auxcont)
+            {
+                if (tarefa == 0)
+                {
+                    elevador.proximoAndar = x;
+                    elevador.doElevator();
+                    tarefa++;
+                }
+                else if (tarefa == 1)
+                {
+                    await finalizar;
+                    elevador.proximoAndar = x;
+                    elevador.doElevator();
+                    tarefa++;
+                }
+                else if (x == 2)
+                {
+                    await finalizar;
+                    elevador.proximoAndar = x;
+                    elevador.doElevator();
+                    tarefa++;
+                }
+                else if (x == 3)
+                {
+                    await finalizar;
+                    elevador.proximoAndar = x;
+                    elevador.doElevator();
+                    tarefa++;
+                }
+                else if (x == 4)
+                {
+                    await finalizar;
+                    elevador.proximoAndar = x;
+                    elevador.doElevator();
+                    tarefa = 0;
+                }
+
+            }
+
+
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        //Controle de Botões
+
+        private void terreo_Click(object sender, EventArgs e)
         {
-            elevador.proximoAndar = 3;
+            int aux = 0; //Andar Terreo
+            Verificar(aux);
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void andar1_Click(object sender, EventArgs e)
         {
-            elevador.proximoAndar = 4;
+            int aux = 1; //Andar 1
+            Verificar(aux);
         }
+
+        private void andar2_Click(object sender, EventArgs e)
+        {
+            int aux = 2; //Andar 2
+            Verificar(aux);
+        }
+
+        private void andar3_Click(object sender, EventArgs e)
+        {
+            int aux = 3; //Andar 3
+            Verificar(aux);
+        }
+
+        private void andar4_Click(object sender, EventArgs e)
+        {
+            int aux = 4; //Andar 4
+            Verificar(aux);
+        }
+
+
     }
 }
-
-    

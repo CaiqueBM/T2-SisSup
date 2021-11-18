@@ -11,8 +11,15 @@ namespace Elevador
     {
         public delegate void ElevatorDelegate(object sender, EventArgs args);
         public event ElevatorDelegate ElevatorEvent;
+
         public int andarAtual;
         public int proximoAndar;
+        public int v1;
+        public int v2;
+        public int v3;
+        public int v4;
+        public int v5;
+        
 
         public void doElevator()
         {
@@ -20,7 +27,8 @@ namespace Elevador
             {
                 ElevatorEvent(this, EventArgs.Empty);
             }
-            Thread.Sleep(3000);
         }
     }
+
+
 }
