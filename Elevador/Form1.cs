@@ -15,6 +15,7 @@ namespace Elevador
     {
 
         private Elevator elevador;
+        private Lista lista;
         private int auxAndar;
         private int auxProxAndar;
         public int i = 0;
@@ -22,14 +23,20 @@ namespace Elevador
         int cont;
         int auxcont;
 
+
+
+
         public Form1()
         {
             InitializeComponent();
 
             elevador = new Elevator();
             elevador.ElevatorEvent += MudarAndar;
+            lista = new Lista();
 
         }
+
+        
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -39,9 +46,10 @@ namespace Elevador
         public async void MudarAndar(object sender, EventArgs e)
         {
 
-
+            auxProxAndar = lista.proxValor;
             auxAndar = elevador.andarAtual;
-            auxProxAndar = elevador.proximoAndar;
+            
+
 
 
             if (auxAndar != auxProxAndar)
@@ -59,7 +67,6 @@ namespace Elevador
                     elevador.andarAtual = elevador.proximoAndar;
                     txtboxAndar.Text = (elevador.andarAtual).ToString();
                     await Transicao();
-                    await Finalizar();
                 }
                 else if (auxAndar > auxProxAndar)
                 {
@@ -74,102 +81,50 @@ namespace Elevador
                     elevador.andarAtual = elevador.proximoAndar;
                     txtboxAndar.Text = (elevador.andarAtual).ToString();
                     await Transicao();
-                    await Finalizar()
-;
+                    ;
                 }
             }
 
-
+            lista.organizarLista();
         }
 
+      
+
+
+       
         async Task Transicao()
         {
             await Task.Delay(2000);
-        }
-
-        async Task Finalizar()
-        {
-            cont++;
-            await Task.Run(() => Task.Delay(200));
-        }
-
-        async void Verificar(int x)
-        {
-
-            var finalizar = Finalizar();
-            auxcont++;
-            if (cont == auxcont)
-            {
-                if (tarefa == 0)
-                {
-                    elevador.proximoAndar = x;
-                    elevador.doElevator();
-                    tarefa++;
-                }
-                else if (tarefa == 1)
-                {
-                    await finalizar;
-                    elevador.proximoAndar = x;
-                    elevador.doElevator();
-                    tarefa++;
-                }
-                else if (x == 2)
-                {
-                    await finalizar;
-                    elevador.proximoAndar = x;
-                    elevador.doElevator();
-                    tarefa++;
-                }
-                else if (x == 3)
-                {
-                    await finalizar;
-                    elevador.proximoAndar = x;
-                    elevador.doElevator();
-                    tarefa++;
-                }
-                else if (x == 4)
-                {
-                    await finalizar;
-                    elevador.proximoAndar = x;
-                    elevador.doElevator();
-                    tarefa = 0;
-                }
-
-            }
-
-
         }
 
         //Controle de Botões
 
         private void terreo_Click(object sender, EventArgs e)
         {
-            int aux = 0; //Andar Terreo
-            Verificar(aux);
+            
+            
+            lista.adicionarItem(1);
+            
         }
 
         private void andar1_Click(object sender, EventArgs e)
         {
-            int aux = 1; //Andar 1
-            Verificar(aux);
+            lista.adicionarItem(2);
         }
 
         private void andar2_Click(object sender, EventArgs e)
         {
-            int aux = 2; //Andar 2
-            Verificar(aux);
+            lista.adicionarItem(3);
         }
 
         private void andar3_Click(object sender, EventArgs e)
         {
-            int aux = 3; //Andar 3
-            Verificar(aux);
+            lista.adicionarItem(4);
         }
 
         private void andar4_Click(object sender, EventArgs e)
         {
-            int aux = 4; //Andar 4
-            Verificar(aux);
+            lista.adicionarItem(5);
         }
 
 

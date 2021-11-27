@@ -14,21 +14,19 @@ namespace Elevador
 
         public int andarAtual;
         public int proximoAndar;
-        public int v1;
-        public int v2;
-        public int v3;
-        public int v4;
-        public int v5;
-        
 
         public void doElevator()
         {
-            if (ElevatorEvent != null)
+            while (true)
             {
-                ElevatorEvent(this, EventArgs.Empty);
+                if (ElevatorEvent != null)
+                {
+                    ElevatorEvent(this, EventArgs.Empty);
+                }
             }
         }
+    
+    }
+    
     }
 
-
-}
