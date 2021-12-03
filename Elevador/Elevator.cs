@@ -9,21 +9,23 @@ namespace Elevador
 {
     class Elevator
     {
-        public delegate void ElevatorDelegate(object sender, EventArgs args);
+        public delegate void ElevatorDelegate(object sender, EventArgs e);
         public event ElevatorDelegate ElevatorEvent;
 
         public int andarAtual;
         public int proximoAndar;
 
-        public void doElevator()
+        public void OnElevator()
         {
-            while (true)
+            if (andarAtual != proximoAndar)
             {
-                if (ElevatorEvent != null)
+                if (ElevatorEvent != null) 
                 {
-                    ElevatorEvent(this, EventArgs.Empty);
+                        ElevatorEvent(this, EventArgs.Empty);
                 }
             }
+            Thread.Sleep(2000);   
+            
         }
     
     }

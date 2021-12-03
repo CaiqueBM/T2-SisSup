@@ -21,6 +21,7 @@ using System.Runtime.InteropServices;
 
 // O GUID a seguir será destinado à ID de typelib se este projeto for exposto para COM
 [assembly: Guid("ebd517be-465c-4277-85d8-af2c416ad762")]
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
 
 // As informações da versão de um assembly consistem nos quatro valores a seguir:
 //
