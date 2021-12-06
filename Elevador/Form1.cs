@@ -37,10 +37,25 @@ namespace Elevador
 
 
             log.Info("Sistema Iniciado");
-            br4.Visible = false;
+            //br4.Visible = false;
 
             subindo.Visible = false;
             descendo.Visible = false;
+
+            imgandar1b.Visible = false;
+            imgandar2b.Visible = false;
+            imgandar3b.Visible = false;
+            imgandar4b.Visible = false;
+            imgandar6b.Visible = false;
+
+
+            img1andar0b.Visible = false;
+            img1andar1b.Visible = false;
+            img1andar2b.Visible = false;
+            img1andar3b.Visible = false;
+            img1andar4b.Visible = false;
+
+
         }
 
         private void adicionarItem(int item)
@@ -67,16 +82,9 @@ namespace Elevador
 
         private void removeItem()
         {
-            
             lista.RemoveAt(0);
-
             int[] arrayLista = lista.ToArray();
-
             int cont = lista.Count;
-
-            
-
-            
         }
 
         private void sequenciaLista()
@@ -87,11 +95,6 @@ namespace Elevador
             string item = "Proximo Andar: " + (arrayLista[0].ToString());
 
             log.Info(item);
-            //log.Info((arrayLista[0]).ToString());
-
-            
-
-
             elevador.OnElevator();
         }
 
@@ -116,10 +119,6 @@ namespace Elevador
                         {
                             label3.Text = (i).ToString();
                         }
-                       
-
-                     
-                        
                         await Transicao();
                     }
                     elevador.andarAtual = elevador.proximoAndar;
@@ -132,17 +131,55 @@ namespace Elevador
                     descendo.Visible = true;
                     for (i = auxAndar; i >= auxProxAndar; i--)
                     {
-                      
-                        
-                        
+                        if (i == 0)
+                        {
+                            label3.Text = "T";
+                        }
+                        else
+                        {
+                            label3.Text = (i).ToString();
+                        }
                         await Transicao();
                     }
                     elevador.andarAtual = elevador.proximoAndar;
                    
                     await Transicao();
                 }
-
             }
+
+            if (auxProxAndar == 0)
+            {
+                imgandar1.Visible = true;
+                imgandar1b.Visible = false;
+                img1andar0.Visible = true;
+                img1andar0b.Visible = false;
+            } else if(auxProxAndar == 1)
+            {
+                imgandar2.Visible = true;
+                imgandar2b.Visible = false;
+                img1andar1.Visible = true;
+                img1andar1b.Visible = false;
+            } else if(auxProxAndar == 2)
+            {
+                imgandar3.Visible = true;
+                imgandar3b.Visible = false;
+                img1andar2.Visible = true;
+                img1andar2b.Visible = false;
+            } else if(auxProxAndar == 3)
+            {
+                imgandar4.Visible = true;
+                imgandar4b.Visible = false;
+                img1andar3.Visible = true;
+                img1andar3b.Visible = false;
+            } else if (auxProxAndar == 4)
+            {
+                imgandar6.Visible = true;
+                imgandar6b.Visible = false;
+                img1andar4.Visible = true;
+                img1andar4b.Visible = false;
+            }
+
+
 
             log.Info("Evento concluido!");
 
@@ -172,7 +209,9 @@ namespace Elevador
 
         private void terreo_Click(object sender, EventArgs e)
         {
-            
+            imgandar1.Visible = false;
+            imgandar1b.Visible = true;
+
             if (simulacao == false) {
                 adicionarItem(0);
             }
@@ -180,6 +219,9 @@ namespace Elevador
 
         private void andar1_Click(object sender, EventArgs e)
         {
+            imgandar2.Visible = false;
+            imgandar2b.Visible = true;
+
             if (simulacao == false)
             {
                 adicionarItem(1);
@@ -188,6 +230,8 @@ namespace Elevador
 
         private void andar2_Click(object sender, EventArgs e)
         {
+            imgandar3.Visible = false;
+            imgandar3b.Visible = true;
             if (simulacao == false)
             {
                 adicionarItem(2);
@@ -196,27 +240,24 @@ namespace Elevador
 
         private void andar3_Click(object sender, EventArgs e)
         {
+            imgandar4.Visible = false;
+            imgandar4b.Visible = true;
             if (simulacao == false)
             {
                 adicionarItem(3);
             }
         }
 
-        private void andar4_Click(object sender, EventArgs e)
-        {
-            br4.Visible = true;
-            andar4.Visible = false;
-            if (simulacao == false)
-            {
-                adicionarItem(4);
-            }
-        }
+
 
 
         //Controle de Botões Painel Externo
 
         private void Subir_Click(object sender, EventArgs e)
         {
+            img1andar0.Visible = false;
+            img1andar0b.Visible = true;
+
             if (simulacao == false)
             {
                 adicionarItem(0);
@@ -225,6 +266,9 @@ namespace Elevador
 
         private void SD1_Click(object sender, EventArgs e)
         {
+            img1andar1.Visible = false;
+            img1andar1b.Visible = true;
+
             if (simulacao == false)
             {
                 adicionarItem(1);
@@ -233,6 +277,9 @@ namespace Elevador
 
         private void SD2_Click(object sender, EventArgs e)
         {
+            img1andar2.Visible = false;
+            img1andar2b.Visible = true;
+
             if (simulacao == false)
             {
                 adicionarItem(2);
@@ -241,6 +288,9 @@ namespace Elevador
 
         private void SD3_Click(object sender, EventArgs e)
         {
+            img1andar3.Visible = false;
+            img1andar3b.Visible = true;
+
             if (simulacao == false)
             {
                 adicionarItem(3);
@@ -249,6 +299,9 @@ namespace Elevador
 
         private void Descer_Click(object sender, EventArgs e)
         {
+            img1andar4.Visible = false;
+            img1andar4b.Visible = true;
+
             if (simulacao == false)
             {
                 adicionarItem(4);
@@ -259,6 +312,16 @@ namespace Elevador
         {
             simulacao = true;
             adicionarItem(simulador.simRand());
+        }
+
+        private void andar4_Click(object sender, EventArgs e)
+        {
+            imgandar6.Visible = false;
+            imgandar6b.Visible = true;
+            if (simulacao == false)
+            {
+                adicionarItem(4);
+            }
         }
     }
 }
