@@ -24,7 +24,14 @@ namespace Elevador
 
             if(teste == andarAtual)
             {
-                teste = randNum.Next(4);
+                if(teste >= 0 && teste < 4)
+                {
+                    teste += 1;
+                } else if(teste == 4)
+                {
+                    teste -= 1;
+                }
+                
             }
             
             return teste;
@@ -41,7 +48,6 @@ namespace Elevador
                     EventSim(this, EventArgs.Empty);
                 }
             }
-
             Thread.Sleep(1000);
         }
 

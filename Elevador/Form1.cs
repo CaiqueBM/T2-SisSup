@@ -22,8 +22,6 @@ namespace Elevador
         public bool simulacao = false;
         public int animSimulador;
 
-
-
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         List<int> lista = new List<int>();
@@ -38,7 +36,6 @@ namespace Elevador
             simulador = new Simulador();
             simulador.EventSim += MudarAndar;
 
-
             log.Info("Sistema Iniciado");
             //br4.Visible = false;
 
@@ -51,20 +48,15 @@ namespace Elevador
             imgandar4b.Visible = false;
             imgandar6b.Visible = false;
 
-
             img1andar0b.Visible = false;
             img1andar1b.Visible = false;
             img1andar2b.Visible = false;
             img1andar3b.Visible = false;
             img1andar4b.Visible = false;
-
-
         }
 
         private void adicionarItem(int item)
         {
-            
-
             if (elevador.andarAtual != item)
             {
                 lista.Add(item);
@@ -74,14 +66,21 @@ namespace Elevador
 
             if (lista.Count == 1 && simulacao == false)
             {
+                string textLog = "Proximo Andar: " + (arrayLista[0].ToString());
+
+                log.Info(textLog);
+
                 elevador.proximoAndar = arrayLista[0];
                 elevador.OnElevator();
             } else if(lista.Count == 1 && simulacao == true)
             {
+                string textLog = "Proximo Andar: " + (arrayLista[0].ToString());
+
+                log.Info(textLog);
+
                 randomSimulador(arrayLista[0]);
                 simulador.proximoAndar = arrayLista[0];
                 simulador.OnSimulador();
-                
             }
        
         }
@@ -147,6 +146,7 @@ namespace Elevador
 
         public async void MudarAndar(object sender, EventArgs e)
         {
+            await Transicao(2);
             int[] arrayLista = lista.ToArray();
             auxProxAndar = arrayLista[0];
 
@@ -154,14 +154,11 @@ namespace Elevador
             {
                 randomSimulador(auxProxAndar);
                 auxAndar = simulador.andarAtual;
-                
             }
             else
             {
                 auxAndar = elevador.andarAtual;
             }
-
-           
 
             if (auxAndar != auxProxAndar)
             {
@@ -181,7 +178,7 @@ namespace Elevador
                         await Transicao(1);
                     }
                     subindo.Visible = false;
-                    elevador.andarAtual = elevador.proximoAndar;
+                    
                     
                 }
                 else if (auxAndar > auxProxAndar)
@@ -209,8 +206,7 @@ namespace Elevador
             {
                 simulador.andarAtual = elevador.proximoAndar;
                 elevador.andarAtual = elevador.proximoAndar;
-            }
-            else
+            } else
             {
                 simulador.andarAtual = simulador.proximoAndar;
                 elevador.andarAtual = simulador.proximoAndar;
@@ -254,7 +250,6 @@ namespace Elevador
             await Transicao(2);
 
             log.Info("Evento concluido!");
-
 
             if (simulacao == true)
             {
