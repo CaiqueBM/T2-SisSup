@@ -20,6 +20,9 @@ namespace Elevador
         public int i = 0;
         public int tarefa = 0;
         public bool simulacao = false;
+        public int animSimulador;
+
+
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -60,24 +63,27 @@ namespace Elevador
 
         private void adicionarItem(int item)
         {
+            
 
             if (elevador.andarAtual != item)
             {
                 lista.Add(item);
             }
-
-           
        
             int[] arrayLista = lista.ToArray();
 
-            if (lista.Count == 1)
+            if (lista.Count == 1 && simulacao == false)
             {
                 elevador.proximoAndar = arrayLista[0];
                 elevador.OnElevator();
+            } else if(lista.Count == 1 && simulacao == true)
+            {
+                randomSimulador(arrayLista[0]);
+                simulador.proximoAndar = arrayLista[0];
+                simulador.OnSimulador();
+                
             }
-
-            int cont = lista.Count;
-            
+       
         }
 
         private void removeItem()
@@ -90,19 +96,72 @@ namespace Elevador
         private void sequenciaLista()
         {
             int[] arrayLista = lista.ToArray();
-            elevador.proximoAndar = arrayLista[0];
-
+            
             string item = "Proximo Andar: " + (arrayLista[0].ToString());
 
             log.Info(item);
-            elevador.OnElevator();
+            
+            if (simulacao == true)
+            {
+                simulador.proximoAndar = arrayLista[0];
+                simulador.OnSimulador();
+            } else
+            {
+                elevador.proximoAndar = arrayLista[0];
+                elevador.OnElevator();
+            }
+        }
+
+        public void randomSimulador(int valor)
+        {
+
+            
+
+
+
+            //int valor = simulador.simRand();
+            //adicionarItem(valor);
+
+            if (valor == 0)
+            {
+                imgandar1.Visible = false;
+                imgandar1b.Visible = true;
+            } else if(valor == 1)
+            {
+                imgandar2.Visible = false;
+                imgandar2b.Visible = true;
+            } else if (valor == 2)
+            {
+                imgandar3.Visible = false;
+                imgandar3b.Visible = true;
+            } else if (valor == 3)
+            {
+                imgandar4.Visible = false;
+                imgandar4b.Visible = true;
+            } else if (valor == 4)
+            {
+                imgandar6.Visible = false;
+                imgandar6b.Visible = true;
+            }
         }
 
         public async void MudarAndar(object sender, EventArgs e)
         {
             int[] arrayLista = lista.ToArray();
             auxProxAndar = arrayLista[0];
-            auxAndar = elevador.andarAtual;
+
+            if (simulacao == true)
+            {
+                randomSimulador(auxProxAndar);
+                auxAndar = simulador.andarAtual;
+                
+            }
+            else
+            {
+                auxAndar = elevador.andarAtual;
+            }
+
+           
 
             if (auxAndar != auxProxAndar)
             {
@@ -119,11 +178,11 @@ namespace Elevador
                         {
                             label3.Text = (i).ToString();
                         }
-                        await Transicao();
+                        await Transicao(1);
                     }
+                    subindo.Visible = false;
                     elevador.andarAtual = elevador.proximoAndar;
-                  
-                    await Transicao();
+                    
                 }
                 else if (auxAndar > auxProxAndar)
                 {
@@ -139,12 +198,22 @@ namespace Elevador
                         {
                             label3.Text = (i).ToString();
                         }
-                        await Transicao();
+                        await Transicao(1);
                     }
-                    elevador.andarAtual = elevador.proximoAndar;
-                   
-                    await Transicao();
+                    
+                    descendo.Visible = false;
                 }
+            }
+
+            if (simulacao == false)
+            {
+                simulador.andarAtual = elevador.proximoAndar;
+                elevador.andarAtual = elevador.proximoAndar;
+            }
+            else
+            {
+                simulador.andarAtual = simulador.proximoAndar;
+                elevador.andarAtual = simulador.proximoAndar;
             }
 
             if (auxProxAndar == 0)
@@ -153,58 +222,69 @@ namespace Elevador
                 imgandar1b.Visible = false;
                 img1andar0.Visible = true;
                 img1andar0b.Visible = false;
-            } else if(auxProxAndar == 1)
+            }
+            else if (auxProxAndar == 1)
             {
                 imgandar2.Visible = true;
                 imgandar2b.Visible = false;
                 img1andar1.Visible = true;
                 img1andar1b.Visible = false;
-            } else if(auxProxAndar == 2)
+            }
+            else if (auxProxAndar == 2)
             {
                 imgandar3.Visible = true;
                 imgandar3b.Visible = false;
                 img1andar2.Visible = true;
                 img1andar2b.Visible = false;
-            } else if(auxProxAndar == 3)
+            }
+            else if (auxProxAndar == 3)
             {
                 imgandar4.Visible = true;
                 imgandar4b.Visible = false;
                 img1andar3.Visible = true;
                 img1andar3b.Visible = false;
-            } else if (auxProxAndar == 4)
+            }
+            else if (auxProxAndar == 4)
             {
                 imgandar6.Visible = true;
                 imgandar6b.Visible = false;
                 img1andar4.Visible = true;
                 img1andar4b.Visible = false;
             }
-
-
+            await Transicao(2);
 
             log.Info("Evento concluido!");
+
 
             if (simulacao == true)
             {
                 adicionarItem(simulador.simRand());
-                await Transicao();
-                await Transicao();
             }
 
-            
+            await Transicao(2);
+
             removeItem();
+
             int cont = lista.Count;
             if (cont > 0)
             {
                 sequenciaLista();
             }
-
         }
 
-        async Task Transicao()
+        async Task Transicao(int item)
         {
-            await Task.Delay(2000);
+            if (item == 1)
+            {
+                await Task.Delay(2000);
+            }
+            else if (item == 2)
+            {
+                await Task.Delay(4000);
+            }
+
         }
-        
+
         //Controle de Botões Painel Interno
 
         private void terreo_Click(object sender, EventArgs e)
@@ -248,8 +328,15 @@ namespace Elevador
             }
         }
 
-
-
+        private void andar4_Click(object sender, EventArgs e)
+        {
+            imgandar6.Visible = false;
+            imgandar6b.Visible = true;
+            if (simulacao == false)
+            {
+                adicionarItem(4);
+            }
+        }
 
         //Controle de Botões Painel Externo
 
@@ -310,17 +397,14 @@ namespace Elevador
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            simulacao = true;
-            adicionarItem(simulador.simRand());
-        }
-
-        private void andar4_Click(object sender, EventArgs e)
-        {
-            imgandar6.Visible = false;
-            imgandar6b.Visible = true;
-            if (simulacao == false)
+            if (checkBox1.Checked == true)
             {
-                adicionarItem(4);
+                simulacao = true;
+                int valor = simulador.simRand();
+                adicionarItem(valor);
+            } else
+            {
+                simulacao = false;
             }
         }
     }

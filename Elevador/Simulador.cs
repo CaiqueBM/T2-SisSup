@@ -14,20 +14,25 @@ namespace Elevador
         public delegate void ElevatorSimDelegate(object sender, EventArgs e);
         public event ElevatorSimDelegate EventSim;
 
-        public int andarAtual;
+        public int andarAtual = 0;
         public int proximoAndar;
 
         public int simRand()
         {
             Random randNum = new Random();
             int teste = randNum.Next(4);
+
+            if(teste == andarAtual)
+            {
+                teste = randNum.Next(4);
+            }
             
             return teste;
         }
 
         public void OnSimulador()
         {
-            proximoAndar = simRand();
+            //proximoAndar = simRand();
 
             if (andarAtual != proximoAndar)
             {
@@ -37,7 +42,7 @@ namespace Elevador
                 }
             }
 
-            Thread.Sleep(4000);
+            Thread.Sleep(1000);
         }
 
     }

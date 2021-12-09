@@ -24,7 +24,7 @@ namespace Elevador
                         ElevatorEvent(this, EventArgs.Empty);
                 }
             }
-            Thread.Sleep(5000);   
+            Thread.Sleep(1000);   
             
         }
     

@@ -78,7 +78,7 @@ namespace Elevador
             this.img1andar2 = new System.Windows.Forms.PictureBox();
             this.img1andar1 = new System.Windows.Forms.PictureBox();
             this.img1andar0 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.parado = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.descendo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.subindo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgandar6)).BeginInit();
@@ -112,7 +112,7 @@ namespace Elevador
             ((System.ComponentModel.ISupportInitialize)(this.img1andar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img1andar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img1andar0)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parado)).BeginInit();
             this.SuspendLayout();
             // 
             // terreo
@@ -570,14 +570,14 @@ namespace Elevador
             this.img1andar0.TabIndex = 11;
             this.img1andar0.TabStop = false;
             // 
-            // pictureBox7
+            // parado
             // 
-            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(410, 175);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(51, 97);
-            this.pictureBox7.TabIndex = 16;
-            this.pictureBox7.TabStop = false;
+            this.parado.Image = ((System.Drawing.Image)(resources.GetObject("parado.Image")));
+            this.parado.Location = new System.Drawing.Point(410, 175);
+            this.parado.Name = "parado";
+            this.parado.Size = new System.Drawing.Size(51, 97);
+            this.parado.TabIndex = 16;
+            this.parado.TabStop = false;
             // 
             // Form1
             // 
@@ -632,7 +632,7 @@ namespace Elevador
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.subindo);
             this.Controls.Add(this.descendo);
-            this.Controls.Add(this.pictureBox7);
+            this.Controls.Add(this.parado);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -669,7 +669,7 @@ namespace Elevador
             ((System.ComponentModel.ISupportInitialize)(this.img1andar2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.img1andar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.img1andar0)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parado)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -725,7 +725,7 @@ namespace Elevador
         private System.Windows.Forms.PictureBox img1andar2;
         private System.Windows.Forms.PictureBox img1andar1;
         private System.Windows.Forms.PictureBox img1andar0;
-        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.PictureBox parado;
     }
 }
 
